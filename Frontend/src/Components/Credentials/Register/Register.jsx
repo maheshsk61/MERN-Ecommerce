@@ -14,7 +14,7 @@ const Register = () => {
     const [errorPwd, setErrorPwd] = useState(false)
     const [pwdRegex, setPwdRegex] = useState(false)
     const [matchPwd, setMatchPwd] = useState(false)
-    const [notification, setNotification] = useState('')
+    const [responseMessage, setResponseMessage] = useState('')
     function handleRegisterValidation(e) {
         e.preventDefault()
         if (!name.trim()) {
@@ -54,14 +54,13 @@ const Register = () => {
             confirmPassword: pwd1
         })
             .then((res) => {
-                console.log(res.data);
-                setNotification(`Hi ${name} Your Registration is successful`)
+                setResponseMessage(res.data);
                 setName('')
                 setEmail('')
                 setPwd('')
                 setPwd1('')
                 setTimeout(() => {
-                    setNotification('')
+                    setResponseMessage('')
                 }, 5000)
             })
             .catch((e) => {
@@ -72,7 +71,7 @@ const Register = () => {
     return (
         <div className='container'>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {notification && <h3 className='alert alert-success text-success'>{notification}</h3>}
+                {responseMessage && <h3 className='alert alert-success text-success'>{responseMessage}</h3>}
             </div>
             <div className="row">
                 <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>

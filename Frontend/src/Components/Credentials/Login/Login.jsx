@@ -9,6 +9,7 @@ function Login() {
     const [errorEmailSymbol, setErrorEmailSymbol] = useState(false)
     const [errorPwd, setErrorPwd] = useState(false)
     const [pwdRegex, setPwdRegex] = useState(false)
+    const [responseMessage, setResponseMessage] = useState('')
     const handleEmailChange = (e) => {
         setRegisteredEmail(e.target.value)
     }
@@ -43,12 +44,12 @@ function Login() {
             password: registeredPwd
         })
             .then((res) => {
-                console.log(res.data);
+                setResponseMessage(res.data);
                 setRegisteredEmail('')
                 setregisteredPwd('')
                 setTimeout(() => {
-                    setNotification('')
-                }, 5000)
+                    setResponseMessage('')
+                }, 5000);
             })
             .catch((e) => {
                 console.log(`Error while posting data ${e}`);
@@ -57,6 +58,10 @@ function Login() {
     }
     return (
         <div className='container'>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                {responseMessage && <h3 className={`alert ${responseMessage.includes("Login Successful") ?
+                    'alert-success text-success' : 'alert-danger text-danger'} text`}>{responseMessage}</h3>}
+            </div>
             <div className="row">
                 <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
                     <div className="col-xs-6 col-md-4">
