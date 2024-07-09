@@ -33,11 +33,14 @@ const Login = async (req, res) => {
                 res.send('Password not found')
             }
         }
-        else if (!user && pwd!==undefined) {
+        else if(!user && pwd!==undefined){
             res.send('Email not found')
         }
-        else if (!user && pwd===undefined){
-            res.send('Email and Password not found')
+        else if(user && pwd===undefined){
+            res.send('Password not found')
+        }
+        else{
+            res.send('Invalid Credentials')
         }
     }
     catch (e) {
