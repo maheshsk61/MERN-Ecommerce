@@ -21,7 +21,7 @@ const Login = async (req, res) => {
     try {
         const { email, password } = req.body
         const user = users.find((user) => user.email === email)
-        const pwd= users.find((user) => user.password === password)
+        const pwd = users.find((user) => user.password === password)
         if (user) {
             console.log(password);
             console.log(user.createPassword);
@@ -29,17 +29,8 @@ const Login = async (req, res) => {
             if (isMatch) {
                 res.send('Login Successful')
             }
-            else if (!isMatch) {
-                res.send('Password not found')
-            }
         }
-        else if(!user && pwd!==undefined){
-            res.send('Email not found')
-        }
-        else if(user && pwd===undefined){
-            res.send('Password not found')
-        }
-        else{
+        else {
             res.send('Invalid Credentials')
         }
     }
