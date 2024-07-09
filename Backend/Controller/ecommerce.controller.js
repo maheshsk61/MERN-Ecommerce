@@ -21,7 +21,6 @@ const Login = async (req, res) => {
     try {
         const { email, password } = req.body
         const user = users.find((user) => user.email === email)
-        const pwd = users.find((user) => user.password === password)
         if (user) {
             console.log(password);
             console.log(user.createPassword);
