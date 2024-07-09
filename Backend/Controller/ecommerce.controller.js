@@ -3,11 +3,11 @@ const users = []
 const Register = async (req, res) => {
     const hashed = await generator(req.body.password)
     try {
-        const newUser={
-            name:req.body.name,
-            email:req.body.email,
-            createPassword:hashed,
-            confirmPassword:hashed
+        const newUser = {
+            name: req.body.name,
+            email: req.body.email,
+            createPassword: hashed,
+            confirmPassword: hashed
         }
         users.push(newUser)
         console.log(newUser);
@@ -18,22 +18,26 @@ const Register = async (req, res) => {
     }
 }
 const Login = async (req, res) => {
-    const isMatch = await validate(req.body.password, hash)
     try {
         const { email, password } = req.body
-        const userEmail = users.find((user) => user.email === email)
-        const userPwd = users.find((user) => user.password === password)
-        if (userEmail && userPwd) {
-            res.send('Login Successful')
+        const user = users.find((user) => user.email === email)
+        const pwd= users.find((user) => user.password === password)
+        if (user) {
+            console.log(password);
+            console.log(user.createPassword);
+            const isMatch = await validate(password, user.createPassword)
+            if (isMatch) {
+                res.send('Login Successful')
+            }
+            else if (!isMatch) {
+                res.send('Password not found')
+            }
         }
-        else if (!userEmail && !userPwd) {
-            res.send('Email and Password not found')
-        }
-        else if (!userEmail) {
+        else if (!user && pwd!==undefined) {
             res.send('Email not found')
         }
-        else if (!userPwd) {
-            res.send('Password not found')
+        else if (!user && pwd===undefined){
+            res.send('Email and Password not found')
         }
     }
     catch (e) {
