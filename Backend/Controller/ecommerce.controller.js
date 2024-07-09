@@ -1,15 +1,24 @@
+const { generator, validate } = require('../hashing/hashing')
 const users = []
-const Register = (req, res) => {
+const Register = async (req, res) => {
+    const hashed = await generator(req.body.password)
     try {
-        users.push(req.body)
-        console.log(users);
+        const newUser={
+            name:req.body.name,
+            email:req.body.email,
+            createPassword:hashed,
+            confirmPassword:hashed
+        }
+        users.push(newUser)
+        console.log(newUser);
         res.send(`Hi ${req.body.name} you have Registered Successfully`)
     }
     catch (e) {
         console.log(e);
     }
 }
-const Login = (req, res) => {
+const Login = async (req, res) => {
+    const isMatch = await validate(req.body.password, hash)
     try {
         const { email, password } = req.body
         const userEmail = users.find((user) => user.email === email)

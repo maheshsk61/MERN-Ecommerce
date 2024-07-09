@@ -44,6 +44,7 @@ function Login() {
             password: registeredPwd
         })
             .then((res) => {
+                console.log(res);
                 setResponseMessage(res.data);
                 setRegisteredEmail('')
                 setregisteredPwd('')

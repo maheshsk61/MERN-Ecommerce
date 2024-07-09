@@ -1,1 +1,1 @@
-npm i express nodemon cors
+npm i express nodemon cors bcryptjs
